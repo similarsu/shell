@@ -1,9 +1,8 @@
 int=1
-dest=aaa
-mkdir ${dest}
-while(( $int<=123 ))
+dest=/home/coolearth/logs/aaa
+mkdir -p ${dest}
+while(( $int<=11230 ))
 do
-	echo $int
 	touch ${dest}/${int}.log
 	let "int++"
 done

@@ -2,10 +2,10 @@ source="/home/coolearth/logs/aaa/"
 dest="/home/coolearth/logs/bbb /home/coolearth/logs/ccc"
 mkdir -p $source
 i=0
-batch=10
+batch=1000
 cpstr=""
 echo ${dest}|xargs -n1 mkdir -p
-find $source -type f |while read file_name
+for file_name in `find $source -type f`
 do
 	if [[ $i -ne 0 && `expr $i % $batch` -eq 0 ]]
 	then
@@ -14,6 +14,7 @@ do
 		#echo "$cpnewstr"
 		#echo ${dest}|xargs -n1 cp ${source}{${cpnewstr}}
 		echo ${dest}|xargs -n1 cp ${cpstr}
+		rm ${cpstr}
 		cpstr=""
 	fi
 	#origin_name=${file_name:${#source}}
@@ -24,12 +25,12 @@ do
 	else
 		cpstr="$cpstr ${origin_name}"
 	fi
-	echo "xxx"
 	let i++
 done
-echo $cpstr
+echo ${cpstr}
 if [ "${cpstr}" != "" ]
 then
 	echo ${dest}|xargs -n1 cp ${cpstr}
+	rm ${cpstr}
 fi
 
